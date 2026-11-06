@@ -42,6 +42,8 @@ struct Cookie {
   BIT(httponly);                  /* the httponly directive is present */
   BIT(prefix_secure);             /* secure prefix is set */
   BIT(prefix_host);               /* host prefix is set */
+  char buf[1];                    /* storage area for
+                                     name+value+path+domain */
 };
 
 /*
@@ -103,7 +105,8 @@ struct CookieInfo {
 struct Curl_easy;
 struct connectdata;
 
-bool Curl_secure_context(struct Curl_easy *data, const char *host);
+bool Curl_secure_context(struct Curl_easy *data, const char *host,
+                         const size_t hlen);
 
 /*
  * Add a cookie to the internal list of cookies. The domain and path arguments
@@ -111,6 +114,7 @@ bool Curl_secure_context(struct Curl_easy *data, const char *host);
  */
 
 #define COOKIE_HTTPHEADER (1<<0) /* if HTTP header-style line */
+#define COOKIE_LIVE       (1<<1) /* from a live server */
 #define COOKIE_SECURE     (1<<2) /* connection is over secure origin */
 #define COOKIE_NOPSL      (1<<3) /* skip PSL check */
 #define COOKIE_NOSESSION  (1<<6) /* drop session cookies */
