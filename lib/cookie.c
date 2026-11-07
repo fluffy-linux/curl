@@ -1117,16 +1117,16 @@ CURLcode Curl_cookie_add(struct Curl_easy *data,
     result = parse_netscape(co, ci, &okay, lineptr, flags & COOKIE_SECURE);
 
   if(result || !okay)
-    goto fail;
+    return result;
 
   if(co->prefix_secure && !co->secure)
     /* The __Secure- prefix only requires that the cookie be set secure */
-    goto fail;
+    return result;
 
   iponly = curlx_strlen(&co->domain) ? host_is_ipnum(&co->domain) : FALSE;
 
   if(!iponly && !(flags & COOKIE_NOPSL) && is_public_suffix(data, co, domain))
-    goto fail;
+    return result;
 
   if(co->prefix_host) {
     /*
@@ -1137,13 +1137,13 @@ CURLcode Curl_cookie_add(struct Curl_easy *data,
        curlx_str_cmp(&co->path, "/") && !co->tailmatch)
       ;
     else
-      goto fail;
+      return result;
   }
 
   if(!ci->running &&    /* read from a file */
      (flags & COOKIE_NOSESSION) &&  /* clean session cookies */
      !co->expires)      /* this is a session cookie */
-    goto fail;
+    return result;
 
   /*
    * Now we have parsed the incoming line, we must now check if this supersedes
@@ -1153,15 +1153,13 @@ CURLcode Curl_cookie_add(struct Curl_easy *data,
   myhash = iponly ? 0 : cookiehash(&co->domain);
   if(!replace_existing(data, co, ci, myhash, flags |
                        (ci->running ? COOKIE_LIVE : 0), &replaces))
-    goto fail;
+    return result;
 
   /* clone the temp cookie into a real one */
   real = cookiedup(co);
-  if(!real) {
-    co = &comem;
-    result = CURLE_OUT_OF_MEMORY;
-    goto fail; /* bail out if we are this low on memory */
-  }
+  if(!real)
+    return CURLE_OUT_OF_MEMORY;
+
   real->livecookie = ci->running;
   real->creationtime = ++ci->lastct;
 
@@ -1188,8 +1186,6 @@ CURLcode Curl_cookie_add(struct Curl_easy *data,
   if(flags & COOKIE_HTTPHEADER)
     data->req.setcookies++;
 
-  return result;
-fail:
   return result;
 }
 
