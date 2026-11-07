@@ -905,8 +905,10 @@ static bool is_public_suffix(struct Curl_easy *data,
   (void)data;
   (void)co;
   (void)domain;
-  DEBUGF(infof(data, "NO PSL to check set-cookie '%s' for domain=%s in %s",
-               co->name, co->domain, domain ? domain : "[file]"));
+  DEBUGF(infof(data, "NO PSL to check set-cookie '%.*s' for domain=%.*s in %s",
+               (int)curlx_strlen(&co->name), curlx_str(&co->name),
+               (int)curlx_strlen(&co->domain), curlx_str(&co->domain),
+               domain ? domain : "[file]"));
 #endif
   return FALSE;
 }
