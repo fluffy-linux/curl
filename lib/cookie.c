@@ -1095,7 +1095,7 @@ CURLcode Curl_cookie_add(struct Curl_easy *data,
                                                  unless set */
                          const int flags)
 {
-  struct tempcookie comem = { 0 };
+  struct tempcookie comem;
   struct tempcookie *co;
   struct Cookie *real;
   size_t myhash;
