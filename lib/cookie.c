@@ -1070,7 +1070,8 @@ static struct Cookie *cookiedup(struct tempcookie *co)
 
   /* copy the path */
   area += curlx_strlen(&co->domain) + 1;
-  memcpy(area, curlx_str(&co->path), curlx_strlen(&co->path));
+  p = curlx_str(&co->path);
+  memcpy(area, p ? p : "", curlx_strlen(&co->path));
   area[curlx_strlen(&co->path)] = 0;
   c->path = area;
 
