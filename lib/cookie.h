@@ -126,7 +126,7 @@ CURLcode Curl_cookie_add(struct Curl_easy *data,
                          const char *path,
                          const int flags) WARN_UNUSED_RESULT;
 CURLcode Curl_cookie_getlist(struct Curl_easy *data,
-                             bool *okay, const char *host,
+                             bool *okay, const char *hostp,
                              struct Curl_llist *list) WARN_UNUSED_RESULT;
 void Curl_cookie_clearall(struct CookieInfo *ci);
 void Curl_cookie_clearsess(struct CookieInfo *ci);
