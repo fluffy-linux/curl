@@ -400,8 +400,7 @@ static void storecookie(struct tempcookie *co, const struct Curl_str *cp,
       plen = strlen(path);
   }
 
-  if(path)
-    sanitize_cookie_path(&co->path, path, plen);
+  sanitize_cookie_path(&co->path, path, plen);
 
   if(curlx_strlen(&cp[COOKIE_DOMAIN]))
     strstore(&co->domain, curlx_str(&cp[COOKIE_DOMAIN]),
