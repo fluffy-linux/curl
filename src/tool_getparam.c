@@ -2245,6 +2245,15 @@ static ParameterError existingfile(char **store,
   return getstr(store, filename, DENY_BLANK);
 }
 
+static ParameterError existingfile_or_glob(char **store,
+                                           const struct LongShort *a,
+                                           const char *filename)
+{
+  if(strpbrk(filename, "*?["))
+    return getstr(store, filename, DENY_BLANK);
+  return existingfile(store, a, filename);
+}
+
 /* opt_file handles file options */
 static ParameterError opt_file(struct OperationConfig *config,
                                const struct LongShort *a,
@@ -2262,7 +2271,7 @@ static ParameterError opt_file(struct OperationConfig *config,
     err = getstr(&config->unix_socket_path, nextarg, DENY_BLANK);
     break;
   case C_CACERT: /* --cacert */
-    err = existingfile(&config->cacert, a, nextarg);
+    err = existingfile_or_glob(&config->cacert, a, nextarg);
     break;
   case C_CAPATH: /* --capath */
     err = getstr(&config->capath, nextarg, DENY_BLANK);
@@ -2281,7 +2290,7 @@ static ParameterError opt_file(struct OperationConfig *config,
     }
     break;
   case C_CRLFILE: /* --crlfile */
-    err = existingfile(&config->crlfile, a, nextarg);
+    err = existingfile_or_glob(&config->crlfile, a, nextarg);
     break;
   case C_DUMP_HEADER: /* --dump-header */
     err = getstr(&config->headerfile, nextarg, DENY_BLANK);
@@ -2315,7 +2324,7 @@ static ParameterError opt_file(struct OperationConfig *config,
     err = parse_output(config, nextarg);
     break;
   case C_PROXY_CACERT: /* --proxy-cacert */
-    err = existingfile(&config->proxy_cacert, a, nextarg);
+    err = existingfile_or_glob(&config->proxy_cacert, a, nextarg);
     break;
   case C_PROXY_CAPATH: /* --proxy-capath */
     err = getstr(&config->proxy_capath, nextarg, DENY_BLANK);
@@ -2325,7 +2334,7 @@ static ParameterError opt_file(struct OperationConfig *config,
                              &config->proxy_key_passwd);
     break;
   case C_PROXY_CRLFILE: /* --proxy-crlfile */
-    err = existingfile(&config->proxy_crlfile, a, nextarg);
+    err = existingfile_or_glob(&config->proxy_crlfile, a, nextarg);
     break;
   case C_PROXY_KEY: /* --proxy-key */
     err = getstr(&config->proxy_key, nextarg, ALLOW_BLANK);
