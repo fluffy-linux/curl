@@ -36,7 +36,7 @@ EXTRA_DIST = $(CURLPAGES) CMakeLists.txt
 
 if BUILD_DOCS
 
-CD2NROFF = $(top_srcdir)/scripts/cd2nroff $< >$@
+CD2NROFF = @PERL@ $(top_srcdir)/scripts/cd2nroff $< >$@
 CD2 = $(CD2_$(V))
 CD2_0 = @echo "  RENDER " $@;
 CD2_1 =

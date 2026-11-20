@@ -58,7 +58,7 @@ $(ASCIIPAGE): $(DPAGES) $(SUPPORT) mainpage.idx Makefile.inc $(MANAGEN)
 	$(GEN)(rm -f $(ASCIIPAGE) && @PERL@ $(MANAGEN) -d $(srcdir) -I $(INCDIR) ascii $(DPAGES) > asciipage.tmp.$$$$ && mv asciipage.tmp.$$$$ $(ASCIIPAGE))
 
 listhelp:
-	$(MANAGEN) -d $(srcdir) listhelp $(DPAGES) > $(top_builddir)/src/tool_listhelp.c
+	@PERL@ $(MANAGEN) -d $(srcdir) listhelp $(DPAGES) > $(top_builddir)/src/tool_listhelp.c
 
 listcats:
-	@$(MANAGEN) listcats $(DPAGES)
+	@@PERL@ $(MANAGEN) listcats $(DPAGES)

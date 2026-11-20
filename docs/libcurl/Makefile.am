@@ -43,7 +43,7 @@ EXTRA_DIST = $(CURLPAGES) ABI.md symbols-in-versions symbols.pl  \
 
 if BUILD_DOCS
 
-CD2NROFF = $(top_srcdir)/scripts/cd2nroff $< >$@
+CD2NROFF = @PERL@ $(top_srcdir)/scripts/cd2nroff $< >$@
 CD2 = $(CD2_$(V))
 CD2_0 = @echo "  RENDER " $@;
 CD2_1 =
@@ -52,7 +52,7 @@ CD2_ = $(CD2_0)
 SUFFIXES = .3 .md
 
 libcurl-symbols.md: $(srcdir)/symbols-in-versions $(srcdir)/mksymbolsmanpage.pl
-	$(CD2)perl $(srcdir)/mksymbolsmanpage.pl < $(srcdir)/symbols-in-versions > $@
+	$(CD2)@PERL@ $(srcdir)/mksymbolsmanpage.pl < $(srcdir)/symbols-in-versions > $@
 
 .md.3:
 	$(CD2)$(CD2NROFF)
