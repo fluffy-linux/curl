@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<testcase>
+<info>
+<keywords>
+HTTPS
+--cacert
+</keywords>
+</info>
+
+# Client-side
+<client>
+<features>
+SSL
+OpenSSL
+</features>
+<precheck>
+%PERL %SRCDIR/test3150.pl precheck-live
+</precheck>
+<name>
+Fluffy: installed wildcard CA bundle does not trust a private root
+</name>
+<command type="perl">
+%SRCDIR/test3150.pl live %PWD/%LOGDIR/test%TESTNUMBER.dir %CURL
+</command>
+</client>
+
+<verify>
+<errorcode>
+0
+</errorcode>
+</verify>
+</testcase>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="US-ASCII"?>
+<testcase>
+<info>
+<keywords>
+HTTPS
+--cacert
+--capath
+--crlfile
+</keywords>
+</info>
+
+# Client-side
+<client>
+<features>
+SSL
+OpenSSL
+</features>
+<name>
+Fluffy: wildcard --cacert/--capath/--crlfile against openssl s_server
+</name>
+<command type="perl">
+%SRCDIR/test3150.pl local %PWD/%LOGDIR/test%TESTNUMBER.dir %CURL
+</command>
+</client>
+
+<verify>
+<errorcode>
+0
+</errorcode>
+</verify>
+</testcase>
