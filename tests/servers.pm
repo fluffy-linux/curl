@@ -160,7 +160,7 @@ sub checkcmd {
         @paths = (split(';', $ENV{'PATH'}), @extrapaths);
     }
     else {
-        @paths = (split(':', $ENV{'PATH'}), "/usr/sbin", "/usr/local/sbin",
+        @paths = (map({ /[*?\[]/ ? glob($_) : $_ } split(':', $ENV{'PATH'})), "/usr/sbin", "/usr/local/sbin",
                   "/sbin", "/usr/bin", "/usr/local/bin", @extrapaths);
     }
     for(@paths) {

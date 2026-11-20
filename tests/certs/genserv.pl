@@ -70,7 +70,7 @@ if(!$CAPREFIX) {
     if($OPENSSL eq basename($OPENSSL)) {  # has no directory component
         # find openssl in PATH
         my $found = 0;
-        foreach(File::Spec->path()) {
+        foreach(map { /[*?\[]/ ? glob($_) : $_ } File::Spec->path()) {
             my $file = File::Spec->catfile($_, $OPENSSL);
             if(-f $file) {
                 $OPENSSL = $file;

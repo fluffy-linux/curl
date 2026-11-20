@@ -285,7 +285,7 @@ sub find_exe_file {
 sub find_file_spath {
     my $filename = $_[0];
     my @spath;
-    push(@spath, File::Spec->path());
+    push(@spath, map { /[*?\[]/ ? glob($_) : $_ } File::Spec->path());
     push(@spath, @sftppath);
     return find_file($filename, @spath);
 }
@@ -296,7 +296,7 @@ sub find_file_spath {
 sub find_exe_file_hpath {
     my $filename = $_[0];
     my @hpath;
-    push(@hpath, File::Spec->path());
+    push(@hpath, map { /[*?\[]/ ? glob($_) : $_ } File::Spec->path());
     push(@hpath, @httptlssrvpath);
     return find_exe_file($filename, @hpath);
 }
