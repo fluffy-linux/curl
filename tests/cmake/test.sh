@@ -1,4 +1,4 @@
-#!/bin/sh -x
+#!/sw/bash/bin/bash -x
 # Copyright (C) Viktor Szakats
 #
 # SPDX-License-Identifier: curl

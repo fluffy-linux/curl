@@ -2103,7 +2103,7 @@ sub rundictserver {
 
     my $port = getfreeport($ipvnum);
     my $aflags = "--port $port $flags";
-    my $cmd = "$srcdir/dictserver.py $aflags";
+    my $cmd = "python3 $srcdir/dictserver.py $aflags";
     my ($dictpid, $pid2) = startnew($cmd, $pidfile, 15, 0);
 
     if($dictpid <= 0 || !pidexists($dictpid)) {
@@ -2224,7 +2224,7 @@ sub runnegtelnetserver {
 
     my $port = getfreeport($ipvnum);
     my $aflags = "--port $port $flags";
-    my $cmd = "$srcdir/negtelnetserver.py $aflags";
+    my $cmd = "python3 $srcdir/negtelnetserver.py $aflags";
     my ($ntelpid, $pid2) = startnew($cmd, $pidfile, 15, 0);
 
     if($ntelpid <= 0 || !pidexists($ntelpid)) {

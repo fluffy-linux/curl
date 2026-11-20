@@ -858,7 +858,7 @@ sub singletest_run {
     elsif($cmdtype eq "shell") {
         # run the command line prepended with "/bin/sh"
         $cmdargs = $cmd;
-        $CMDLINE = "/bin/sh ";
+        $CMDLINE = "/sw/bash/bin/bash ";
         $tool = $CMDLINE;
         $disablevalgrind = 1;
     }
